@@ -1,0 +1,9 @@
+[config]
+
+name="GodotAndroidYandexAds"
+binary_type="local"
+binary="GodotAndroidYandexAds-debug.aar"
+
+[dependencies]
+
+remote=["com.yandex.android:mobileads:5.0.0-beta.1", "com.yandex.android:mobmetricalib:4.1.1"]

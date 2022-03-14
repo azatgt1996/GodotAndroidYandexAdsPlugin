@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.azatgt.godotandroidyandexads">
+    <application>
+        <meta-data
+            android:name="org.godotengine.plugin.v1.GodotAndroidYandexAds"
+            android:value="com.azatgt.godotandroidyandexads.GodotAndroidYandexAds"/>
+    </application>
+</manifest>
