@@ -43,7 +43,7 @@ func init() -> bool:
 		_admob_singleton = Engine.get_singleton("GodotAndroidYandexAds")
 		
 		# check if one signal is already connected
-		if not _admob_singleton.is_connected("on_banner_loaded", self, "_on_banner_loaded"):
+		if not _admob_singleton.is_connected("_on_banner_loaded", self, "_on_banner_loaded"):
 			connect_signals()
 		_admob_singleton.init(api_key) #
 
