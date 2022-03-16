@@ -11,8 +11,10 @@ signal interstitial_loaded
 signal interstitial_closed
 
 signal rewarded_video_loaded
+signal rewarded_video_closed
 signal rewarded(currency, ammount)
 signal rewarded_video_failed_to_load(error_code)
+signal rewarded_video_left_application
 
 
 # properties
@@ -44,23 +46,26 @@ func init() -> bool:
 		if not _admob_singleton.is_connected("on_banner_loaded", self, "_on_banner_loaded"):
 			connect_signals()
 		_admob_singleton.init(api_key) #
-		print("ok")
+
 		return true
 	return false
 
 # connect the AdMob Java signals
 func connect_signals() -> void:
-	_admob_singleton.connect("on_banner_loaded", self, "_on_banner_loaded")
-	_admob_singleton.connect("on_banner_failed_to_load", self, "_on_banner_failed_to_load")
+	_admob_singleton.connect("_on_banner_loaded", self, "_on_banner_loaded")
+	_admob_singleton.connect("_on_banner_failed_to_load", self, "_on_banner_failed_to_load")
 	
-	_admob_singleton.connect("on_interstitial_loaded", self, "_on_interstitial_loaded")
-	_admob_singleton.connect("on_interstitial_failed_to_load", self, "_on_interstitial_failed_to_load")
-	_admob_singleton.connect("on_returned_to_application_after_interstitial", self, "_on_returned_to_application_after_interstitial")
-	_admob_singleton.connect("on_interstitial_ad_dismissed", self, "_on_interstitial_ad_dismissed")
+	_admob_singleton.connect("_on_interstitial_loaded", self, "_on_interstitial_loaded")
+	_admob_singleton.connect("_on_interstitial_failed_to_load", self, "_on_interstitial_failed_to_load")
+	_admob_singleton.connect("_on_returned_to_application_after_interstitial", self, "_on_returned_to_application_after_interstitial")
+	_admob_singleton.connect("_on_interstitial_ad_dismissed", self, "_on_interstitial_ad_dismissed")
 	
-	_admob_singleton.connect("on_rewarded_video_ad_failed_to_load", self, "_on_rewarded_video_ad_failed_to_load")
-	_admob_singleton.connect("on_rewarded_video_ad_loaded", self, "_on_rewarded_video_ad_loaded")
-	_admob_singleton.connect("on_rewarded", self, "_on_rewarded")
+	_admob_singleton.connect("_on_rewarded_video_ad_failed_to_load", self, "_on_rewarded_video_ad_failed_to_load")
+	_admob_singleton.connect("_on_rewarded_video_ad_loaded", self, "_on_rewarded_video_ad_loaded")
+	_admob_singleton.connect("_on_rewarded", self, "_on_rewarded")
+	_admob_singleton.connect("_on_returned_to_application_after_rewarded_video", self, "_on_rewarded_video_ad_closed")
+	_admob_singleton.connect("_on_rewarded_video_ad_dismissed", self, "_on_rewarded_video_ad_closed")
+	_admob_singleton.connect("_on_rewarded_video_ad_left_application", self, "_on_rewarded_video_ad_left_application")
 
 # load
 func load_banner() -> void:
@@ -145,3 +150,9 @@ func _on_rewarded(currency:String, amount:int) -> void:
 func _on_rewarded_video_ad_failed_to_load(error_code:int) -> void:
 	_is_rewarded_video_loaded = false
 	emit_signal("rewarded_video_failed_to_load", error_code)
+
+func _on_rewarded_video_ad_closed() -> void:
+	emit_signal("rewarded_video_closed")
+
+func _on_rewarded_video_ad_left_application() -> void:
+	emit_signal("rewarded_video_left_application")
