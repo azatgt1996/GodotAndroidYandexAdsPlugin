@@ -2,7 +2,7 @@
 
 name="GodotAndroidYandexAds"
 binary_type="local"
-binary="GodotAndroidYandexAds-debug.aar"
+binary="GodotAndroidYandexAds-release.aar"
 
 [dependencies]
 

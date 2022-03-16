@@ -70,31 +70,31 @@ public class GodotAndroidYandexAds extends GodotPlugin {
         Set<SignalInfo> signals = new ArraySet<>();
 
 
-        signals.add(new SignalInfo("on_banner_loaded"));
-        signals.add(new SignalInfo("on_banner_failed_to_load", Integer.class));
-        signals.add(new SignalInfo("on_banner_clicked"));
-        signals.add(new SignalInfo("on_banner_left_application"));
-        signals.add(new SignalInfo("on_returned_to_application_after_banner"));
-//        signals.add(new SignalInfo("on_banner_impression", String.class));
+        signals.add(new SignalInfo("_on_banner_loaded"));
+        signals.add(new SignalInfo("_on_banner_failed_to_load", Integer.class));
+        signals.add(new SignalInfo("_on_banner_clicked"));
+        signals.add(new SignalInfo("_on_banner_left_application"));
+        signals.add(new SignalInfo("_on_returned_to_application_after_banner"));
+//        signals.add(new SignalInfo("_on_banner_impression", String.class));
 
-        signals.add(new SignalInfo("on_interstitial_loaded"));
-        signals.add(new SignalInfo("on_interstitial_failed_to_load", Integer.class));
-        signals.add(new SignalInfo("on_returned_to_application_after_interstitial"));
-        signals.add(new SignalInfo("on_interstitial_ad_shown"));
-        signals.add(new SignalInfo("on_interstitial_ad_dismissed"));
-        signals.add(new SignalInfo("on_interstitial_clicked"));
-        signals.add(new SignalInfo("on_interstitial_left_application"));
-//        signals.add(new SignalInfo("on_interstitial_impression", String.class));
+        signals.add(new SignalInfo("_on_interstitial_loaded"));
+        signals.add(new SignalInfo("_on_interstitial_failed_to_load", Integer.class));
+        signals.add(new SignalInfo("_on_returned_to_application_after_interstitial"));
+        signals.add(new SignalInfo("_on_interstitial_ad_shown"));
+        signals.add(new SignalInfo("_on_interstitial_ad_dismissed"));
+        signals.add(new SignalInfo("_on_interstitial_clicked"));
+        signals.add(new SignalInfo("_on_interstitial_left_application"));
+//        signals.add(new SignalInfo("_on_interstitial_impression", String.class));
 
-        signals.add(new SignalInfo("on_rewarded_video_ad_failed_to_load", Integer.class));
-        signals.add(new SignalInfo("on_rewarded_video_ad_loaded"));
-        signals.add(new SignalInfo("on_rewarded", String.class, Integer.class));
-        signals.add(new SignalInfo("on_rewarded_video_ad_left_application"));
-        signals.add(new SignalInfo("on_rewarded_video_ad_clicked"));
-        signals.add(new SignalInfo("on_returned_to_application_after_rewarded_video"));
-        signals.add(new SignalInfo("on_rewarded_video_ad_shown"));
-//        signals.add(new SignalInfo("on_rewarded_video_ad_impression", String.class));
-        signals.add(new SignalInfo("on_rewarded_video_ad_dismissed"));
+        signals.add(new SignalInfo("_on_rewarded_video_ad_failed_to_load", Integer.class));
+        signals.add(new SignalInfo("_on_rewarded_video_ad_loaded"));
+        signals.add(new SignalInfo("_on_rewarded", String.class, Integer.class));
+        signals.add(new SignalInfo("_on_rewarded_video_ad_left_application"));
+        signals.add(new SignalInfo("_on_rewarded_video_ad_clicked"));
+        signals.add(new SignalInfo("_on_returned_to_application_after_rewarded_video"));
+        signals.add(new SignalInfo("_on_rewarded_video_ad_shown"));
+//        signals.add(new SignalInfo("_on_rewarded_video_ad_impression", String.class));
+        signals.add(new SignalInfo("_on_rewarded_video_ad_dismissed"));
 
         return signals;
     }
@@ -136,55 +136,55 @@ public class GodotAndroidYandexAds extends GodotPlugin {
             @Override
             public void onLeftApplication() {
                 Log.w("godot", "YandexAds: onRewardedVideoAdLeftApplication");
-                emitSignal("on_rewarded_video_ad_left_application");
+                emitSignal("_on_rewarded_video_ad_left_application");
             }
 
             @Override
             public void onAdFailedToLoad(@NonNull final AdRequestError error) {
                 Log.w("godot", "YandexAds: onRewardedVideoAdFailedToLoad. Error: " + error.getCode());
-                emitSignal( "on_rewarded_video_ad_failed_to_load", error.getCode());
+                emitSignal( "_on_rewarded_video_ad_failed_to_load", error.getCode());
             }
 
             @Override
             public void onAdLoaded() {
                 Log.w("godot", "YandexAds: onRewardedVideoAdLoaded");
-                emitSignal( "on_rewarded_video_ad_loaded");
+                emitSignal( "_on_rewarded_video_ad_loaded");
             }
 
             @Override
             public void onAdClicked() {
                 Log.w("godot", "YandexAds: onRewardedVideoAdClicked");
-                emitSignal( "on_rewarded_video_ad_clicked");
+                emitSignal( "_on_rewarded_video_ad_clicked");
             }
 
             @Override
             public void onRewarded(@NonNull final Reward reward) {
                 Log.w("godot", "YandexAds: " + String.format(" onRewarded! currency: %s amount: %d", reward.getType(), reward.getAmount()));
-                emitSignal( "on_rewarded", reward.getType(), reward.getAmount() );
+                emitSignal( "_on_rewarded", reward.getType(), reward.getAmount() );
             }
 
             @Override
             public void onReturnedToApplication() {
                 Log.w("godot", "YandexAds: onReturnedToApplicationAfterRewardedVideo");
-                emitSignal( "on_returned_to_application_after_rewarded_video");
+                emitSignal( "_on_returned_to_application_after_rewarded_video");
             }
 
             @Override
             public void onAdShown() {
                 Log.w("godot", "YandexAds: onRewardedVideoAdShown");
-                emitSignal( "on_rewarded_video_ad_shown");
+                emitSignal( "_on_rewarded_video_ad_shown");
             }
 
             @Override
             public void onImpression(@Nullable ImpressionData impressionData) {
 //                Log.w("godot", "YandexAds: onRewardedVideoAdImpression");
-//                emitSignal( "on_rewarded_video_ad_impression", impressionData.getRawData());
+//                emitSignal( "_on_rewarded_video_ad_impression", impressionData.getRawData());
             }
 
             @Override
             public void onAdDismissed() {
                 Log.w("godot", "YandexAds: onRewardedVideoAdDismissed");
-                emitSignal( "on_rewarded_video_ad_dismissed");
+                emitSignal( "_on_rewarded_video_ad_dismissed");
             }
 
         });
@@ -261,38 +261,38 @@ public class GodotAndroidYandexAds extends GodotPlugin {
             @Override
             public void onAdLoaded() {
                 Log.w("godot", "YandexAds: onBannerAdLoaded");
-                emitSignal("on_banner_loaded");
+                emitSignal("_on_banner_loaded");
             }
 
             @Override
             public void onAdFailedToLoad(@NonNull final AdRequestError error)
             {
                 Log.w("godot", "YandexAds: onBannerAdFailedToLoad. Error: " + error.getCode());
-                emitSignal("on_banner_failed_to_load", error.getCode());
+                emitSignal("_on_banner_failed_to_load", error.getCode());
             }
 
             @Override
             public void onAdClicked() {
                 Log.w("godot", "YandexAds: onBannerAdClicked");
-                emitSignal("on_banner_clicked");
+                emitSignal("_on_banner_clicked");
             }
 
             @Override
             public void onLeftApplication() {
                 Log.w("godot", "YandexAds: onBannerAdLeftApplication");
-                emitSignal("on_banner_left_application");
+                emitSignal("_on_banner_left_application");
             }
 
             @Override
             public void onReturnedToApplication() {
                 Log.w("godot", "YandexAds: onReturnedToApplicationAfterBannerAd");
-                emitSignal("on_returned_to_application_after_banner");
+                emitSignal("_on_returned_to_application_after_banner");
             }
 
             @Override
             public void onImpression(@Nullable ImpressionData impressionData) {
 //                Log.w("godot", "YandexAds: onBannerAdImpression");
-//                emitSignal("on_banner_impression", impressionData.getRawData());
+//                emitSignal("_on_banner_impression", impressionData.getRawData());
             }
         });
         layout.addView(banner, adParams);
@@ -387,49 +387,49 @@ public class GodotAndroidYandexAds extends GodotPlugin {
             @Override
             public void onAdLoaded() {
                 Log.w("godot", "YandexAds: onInterstitialAdLoaded");
-                emitSignal("on_interstitial_loaded");
+                emitSignal("_on_interstitial_loaded");
             }
 
             @Override
             public void onAdFailedToLoad(@NonNull AdRequestError error) {
                 Log.w("godot", "YandexAds: onInterstitialAdFailedToLoad. Error: " + error.getCode());
-                emitSignal("on_interstitial_failed_to_load", error.getCode());
+                emitSignal("_on_interstitial_failed_to_load", error.getCode());
             }
 
             @Override
             public void onAdShown() {
                 Log.w("godot", "YandexAds: onInterstitialAdShown");
-                emitSignal("on_interstitial_ad_shown");
+                emitSignal("_on_interstitial_ad_shown");
             }
 
             @Override
             public void onAdDismissed() {
                 Log.w("godot", "YandexAds: onInterstitialAdDismissed");
-                emitSignal("on_interstitial_ad_dismissed");
+                emitSignal("_on_interstitial_ad_dismissed");
             }
 
             @Override
             public void onAdClicked() {
                 Log.w("godot", "YandexAds: onInterstitialAdClicked");
-                emitSignal("on_interstitial_clicked");
+                emitSignal("_on_interstitial_clicked");
             }
 
             @Override
             public void onLeftApplication() {
                 Log.w("godot", "YandexAds: onInterstitialAdLeftApplication");
-                emitSignal("on_interstitial_left_application");
+                emitSignal("_on_interstitial_left_application");
             }
 
             @Override
             public void onReturnedToApplication() {
                 Log.w("godot", "YandexAds: onReturnedToApplicationAfterInterstitial");
-                emitSignal("on_returned_to_application_after_interstitial");
+                emitSignal("_on_returned_to_application_after_interstitial");
             }
 
             @Override
             public void onImpression(@Nullable ImpressionData impressionData) {
 //                Log.w("godot", "YandexAds: onInterstitialAdImpression");
-//                emitSignal("on_interstitial_impression", impressionData.getRawData());
+//                emitSignal("_on_interstitial_impression", impressionData.getRawData());
             }
         });
 
